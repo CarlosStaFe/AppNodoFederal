@@ -1,0 +1,25 @@
+body {
+  height: 100%;
+}
+
+#apelNombre {
+  text-transform: capitalize;
+}
+
+#email {
+  text-transform: lowercase;
+}
+
+#usuario {
+  text-transform: lowercase;
+}
+
+#activo {
+  text-transform: uppercase;
+}
+
+input[type="checkbox"] {
+  margin-top: auto;
+  width: 20px;
+  height: 20px;
+}

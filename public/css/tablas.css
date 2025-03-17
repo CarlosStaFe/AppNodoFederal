@@ -1,0 +1,44 @@
+body {
+  height: 100%;
+}
+
+.cabecera {
+  text-align: center !important;
+  background-color: rgb(0, 89, 255) !important;
+  font-size: 15px !important;
+  color: white !important;
+}
+
+.detalle-nodo {
+  font-size: 13px !important;
+  vertical-align: middle !important;
+}
+
+.detalle-user {
+  font-size: 15px !important;
+  vertical-align: middle !important;
+}
+
+.detalle-socio {
+  font-size: 13px !important;
+  vertical-align: middle !important;
+}
+
+.detalle-cliente {
+  font-size: 13px !important;
+  vertical-align: middle !important;
+}
+
+.nro {
+  text-align: right;
+}
+
+.act {
+  text-align: center;
+  font-size: 25px;
+}
+
+.opc {
+  text-align: center;
+  font-size: 25px;
+}

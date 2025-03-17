@@ -1,0 +1,101 @@
+
+
+<%- include('partials/_head'); %>
+
+<link href="/css/tablas.css" rel="stylesheet">
+<link href="img/ICONO_LF.ico" rel="icon">
+<link href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" rel="stylesheet" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+
+<header>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <img class="mb-1 rounded" src="/img/NF-LOGO.jpeg" alt="" width="200" height="75">
+
+<%- include('partials/_header'); %>
+
+<div class="container-fluid">
+    <h2>Mantenimiento de Nodos</h2>
+    <a href="/createnodo" class="btn btn-outline-primary mt-2"><i class='bx bxs-plus-circle bx-md'></i>Crear</a>
+    <!-- <a href="/" class="btn btn-outline-success mt-4"><i class='bx bx-home-circle bx-md'></i></a> -->
+    <table id="tablaNodos" class="table table-bordered table-hover table-striped mt-2">
+        <thead>
+            <tr>
+                <th class="cabecera">NRO.</th>
+                <th class="cabecera">FACT.</th>
+                <th class="cabecera">NOMBRE</th>
+                <th class="cabecera">DOMICILIO</th>
+                <th class="cabecera">COD.</th>
+                <th class="cabecera">LOCALIDAD</th>
+                <th class="cabecera">PROVINCIA</th>
+                <th class="cabecera">TELEFONO</th>
+                <th class="cabecera">EMAIL</th>
+                <th class="cabecera">CUIT</th>
+                <th class="cabecera">TIPO</th>
+                <th class="cabecera">ACT.</th>
+                <th class="cabecera">OPC.</th>
+            </tr>
+        </thead>
+        <tbody class="detalle-nodo">
+            <% if (filas) { %>
+                <% filas.forEach((nodo) => { %>
+                    <tr>
+                        <td class="nro"><%= nodo.NroNodo %></td>
+                        <td class="nro"><%= nodo.NroFactura %></td>
+                        <td><%= nodo.Nombre %></td>
+                        <td><%= nodo.Domicilio %></td>
+                        <td class="nro"><%= nodo.CodPostal %></td>
+                        <td><%= nodo.Localidad %></td>
+                        <td><%= nodo.Provincia %></td>
+                        <td><%= nodo.Telefono %></td>
+                        <td><%= nodo.Email %></td>
+                        <td><%= nodo.Cuit %></td>
+                        <td><%= nodo.Tipo %></td>
+                        <% if (nodo.Activo === 1) { %>
+                            <td class="act"><i class="fa-solid fa-square-check" style="color: green;"></i>
+                            </td>
+                        <% } else { %>
+                            <td class="act"><i class="fa-solid fa-square-check" style="color: red;"></i>
+                            </td>
+                        <% } %>
+                        <td>
+                            <a href="/editnodo/<%= nodo.id %>" class="btn btn-info"><i class='bx bxs-edit' ></i></a>
+                        </td>
+                    </tr>
+                <% }) %>
+            <% } %>
+        </tbody>
+    </table>
+</div>
+
+<%- include('partials/_footer'); %>
+
+<!-- Incluye los archivos JS de DataTables -->
+<script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
+
+<script>
+    let opciones = {
+        "language": {
+            "url": "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
+        },
+        "pageLength": 5,
+        "destroy": true,
+        "columnDefs": [
+            { "orderable": false, "targets": [11, 12] }],
+        //"scrollx": "5000px",
+        "lengthMenu": [ 5, 10, 25, 50, 100]
+    };
+    
+    let table = new DataTable('#tablaNodos', opciones);
+    $(document).ready(function() {
+        $('#tablaNodos').DataTable();
+    });
+</script>
+
+</body>
+
+</html>

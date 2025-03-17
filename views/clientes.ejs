@@ -1,0 +1,102 @@
+    <%- include('partials/_head'); %>
+
+    <link href="/css/tablas.css" rel="stylesheet">
+    <link href="/img/ICONO_LF.ico" rel="icon">
+    <link href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/  U6swU2Im1vVX0SVk9ABhg==" rel="stylesheet" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+
+<header>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <img class="mb-1 rounded" src="/img/NF-LOGO.jpeg" alt="" width="200" height="75">
+
+<%- include('partials/_header'); %>
+
+<div class="container-fluid">
+    <h2>Mantenimiento de Clientes</h2>
+    <a href="/createcliente" class="btn btn-outline-primary mt-2"><i class='bx bxs-plus-circle bx-md'></i>Crear</a>
+    <!-- <a href="/" class="btn btn-outline-success mt-4"><i class='bx bx-home-circle bx-md'></i>Inicio</a> -->
+    <table id="tablaSocios" class="table table-bordered table-hover table-striped mt-2">
+        <thead>
+            <tr class="bg-primary text-white text-center">
+                <th class="cabecera">APELLIDO Y NOMBRES</th>
+                <th class="cabecera">CUIT/L</th>
+                <th class="cabecera">F.NACIM.</th>
+                <th class="cabecera">SEXO</th>
+                <th class="cabecera">DOMICILIO</th>
+                <th class="cabecera">CODIGO</th>
+                <th class="cabecera">LOCALIDAD</th>
+                <th class="cabecera">PROVINCIA</th>
+                <th class="cabecera">TELEFONO</th>
+                <th class="cabecera">EMAIL</th>
+                <th class="cabecera">ESTADO</th>
+                <th class="cabecera">F.ESTADO</th>
+                <th class="cabecera">ACTIVO</th>
+                <th class="cabecera">OPC.</th>
+            </tr>
+        </thead>
+        <tbody class="detalle-socio">
+            <% if (filas) { %>
+                <% filas.forEach((cliente)=> { %>
+                    <tr>
+                        <td><%= cliente.ApelNombre %></td>
+                        <td><%= cliente.FechaNac %></td>
+                        <td><%= cliente.Sexo %></td>
+                        <td><%= cliente.Cuil %></td>
+                        <td><%= cliente.Domicilio %></td>
+                        <td><%= cliente.CodPostal %></td>
+                        <td><%= cliente.Localidad %></td>
+                        <td><%= cliente.Provincia %></td>
+                        <td><%= cliente.Telefono %></td>
+                        <td><%= cliente.Email %></td>
+                        <td><%= cliente.Estado %></td>
+                        <td><%= cliente.FechaEst %></td>
+                        <% if (cliente.Activo === 1) { %>
+                            <td class="act"><i class="fa-solid fa-square-check" style="color: green;"></i>
+                            </td>
+                        <% } else { %>
+                            <td class="act"><i class="fa-solid fa-square-check" style="color: red;"></i>
+                            </td>
+                        <% } %>
+                        <td class="opc">
+                            <a href="/editcliente/<%= cliente.id %>" class="btn btn-info btn-sm"><i class='bx bxs-edit'></i></a>
+                            <!-- <a href="/deleteuser/<%= socio.id %>" class="btn btn-danger btn-sm"><i class='bx bxs-trash-alt'></i></a> -->
+                        </td>
+                    </tr>
+                <% }) %>
+            <% } %>
+        </tbody>
+    </table>
+</div>
+
+<%- include('partials/_footer'); %>
+
+<!-- Incluye los archivos JS de DataTables -->
+<script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
+
+<script>
+    let opciones = {
+        "language": {
+            "url": "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
+        },
+        "pageLength": 5,
+        "destroy": true,
+        "columnDefs": [
+            { "orderable": false, "targets": [12, 13] }],
+        //"scrollx": "5000px",
+        "lengthMenu": [ 5, 10, 25, 50, 100]
+    };
+    
+    let table = new DataTable('#tablaSocios', opciones);
+    $(document).ready(function() {
+        $('#tablaSocios').DataTable();
+    });
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,197 @@
+
+    <%- include('partials/_head'); %>
+
+    <link href="/css/createcliente.css" rel="stylesheet">
+    <link href="/img/ICONO_LF.ico" rel="icon">
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <img class="mb-1 rounded" src="/img/NF-LOGO.jpeg" alt="" width="200" height="75">
+
+    <%- include('partials/_header'); %>
+
+    <main>
+        <div class="container">
+            <form class="row g-3 col-lg-12 shadow p-3 needs-validation text-primary" novalidate action="/createcliente" method="POST">
+                <div class="bg-primary text-white p-1 text-center">
+                    <h3>Modificar Cliente</h3>
+                </div>
+                <div>
+                    <input id="nombrelocal" name="nombrelocal" type="hidden">
+                    <input id="nombreprov" name="nombreprov" type="hidden">
+                </div>
+                <div class="col-lg-4 col-md-12 position-relative">
+                    <label for="apelnombre" class="form-label">Apellido y Nombres</label>
+                    <input id="apelnombre" name="apelnombre" type="text" class="form-control" required>
+                    <div class="invalid-tooltip">Debe ingresar el apellido y nombres</div>
+                </div>
+                <div class="col-lg-2 col-md-4 position-relative">
+                    <label for="fechanac" class="form-label">Fecha Nac.</label>
+                    <input id="fechanac" name="fechanac" type="date" class="form-control" required>
+                    <div class="invalid-tooltip">Debe ingresar la fecha de nacimiento</div>
+                </div>
+                <div class="col-lg-1 col-md-4 position-relative">
+                    <label for="sexo" class="form-label">Sexo</label>
+                    <select id="sexo" name="sexo" class="form-select" required>
+                        <option selected disabled>Elige sexo...</option>
+                        <option value="M">M</option>
+                        <option value="F">F</option>
+                    </select>
+                    <div class="invalid-tooltip">Debe ingresar sexo</div>
+                </div>
+                <div class="col-lg-2 col-md-4 position-relative">
+                    <label for="documento" class="form-label">Documento</label>
+                    <input id="documento" name="documento" type="text" class="form-control" required>
+                    <div class="invalid-tooltip">Debe ingresar un documento</div>
+                </div>
+                <div class="col-lg-2 col-md-4 position-relative">
+                    <label for="cuil" class="form-label">C.U.I.L.</label>
+                    <input id="cuil" name="cuil" type="text" class="form-control" disabled>
+                    <div class="invalid-tooltip">Debe ingresar un C.U.I.L.</div>
+                </div>
+                <div class="col-lg-4 col-md-12 position-relative">
+                    <label for="domicilio" class="form-label">Domicilio</label>
+                    <input id="domicilio" name="domicilio" type="text" class="form-control" required>
+                    <div class="invalid-tooltip">Debe ingresar un domicilio</div>
+                </div>
+                <div class="col-lg-2 col-md-5 position-relative">
+                    <label for="provincia" class="form-label">Provincia</label>
+                    <select id="provincia" name="provincia" class="form-select" required>
+                        <option selected disabled>Provincia...</option>
+                        <option value="6">BUENOS AIRES</option>
+                        <option value="2">CABA</option>
+                        <option value="10">CATAMARCA</option>
+                        <option value="22">CHACO</option>
+                        <option value="26">CHUBUT</option>
+                        <option value="18">CORRIENTES</option>
+                        <option value="14">CORDOBA</option>
+                        <option value="30">ENTRE RIOS</option>
+                        <option value="34">FORMOSA</option>
+                        <option value="38">JUJUY</option>
+                        <option value="42">LA PAMPA</option>
+                        <option value="46">LA RIOJA</option>
+                        <option value="50">MENDOZA</option>
+                        <option value="54">MISIONES</option>
+                        <option value="58">NEUQUEN</option>
+                        <option value="62">RIO NEGRO</option>
+                        <option value="70">SAN JUAN</option>
+                        <option value="74">SAN LUIS</option>
+                        <option value="66">SALTA</option>
+                        <option value="78">SANTA CRUZ</option>
+                        <option value="82">SANTA FE</option>
+                        <option value="86">SANTIAGO DEL ESTERO</option>
+                        <option value="94">TIERRA DEL FUEGO</option>
+                        <option value="90">TUCUMAN</option>
+                    </select>
+                </div>  
+                <div class="col-lg-4 col-md-5 position-relative">
+                    <label for="localidad" class="form-label">Localidad</label>
+                    <select id="localidad" name="localidad" type="text" class="form-select" required>
+                        <option selected disabled>Localidad...</option>
+                    </select>
+                    <div class="invalid-tooltip">Debe ingresar una localidad</div>
+                </div>
+                <div class="col-lg-2 col-md-2 position-relative">
+                    <label for="codpostal" class="form-label">Código Postal</label>
+                    <select id="codpostal" name="codpostal" type="number" class="form-select" required>
+                        <option selected disabled>Código Postal...</option>
+                    </select>
+                    <div class="invalid-tooltip">Debe ingresar un Código Postal</div>
+                </div>
+                <div class="col-lg-3 col-md-6 position-relative">
+                    <label for="telefono" class="form-label">Teléfono</label>
+                    <input id="telefono" name="telefono" type="tel" class="form-control" required>
+                    <div class="invalid-tooltip">Debe ingresar un teléfono</div>
+                </div>
+                <div class="col-lg-4 col-md-6 position-relative">
+                    <label for="email" class="form-label">Email</label>
+                    <input id="email" name="email" type="email" class="form-control" required>
+                    <div class="invalid-tooltip">Debe ingresar un correo electrónico</div>
+                </div>
+                <div class="col-lg-3 col-md-6 position-relative">
+                    <label for="estado" class="form-label">Estado</label>
+                    <select id="estado" name="estado" class="form-select" required>
+                        <option selected disabled>Elige un estado...</option>
+                        <option value="ACTIVO">ACTIVO</option>
+                        <option value="INACTIVO">ACTIVO</option>
+                        <option value="ATRASADO">ATRASADO</option>
+                        <option value="CANCELADO">CANCELADO</option>
+                        <option value="CANCELADO CON ATRASO">CANCELADO CON ATRASO</option>
+                        <option value="AFECTADO">AFECTADO</option>
+                        <option value="EN CONVENIO">EN CONVENIO</option>
+                    </select>
+                    <div class="invalid-tooltip">Debe ingresar posición frente al I.V.A.</div>
+                </div>
+                <div class="col-lg-2 col-md-12 position-relative">
+                    <label for="fechaest" class="form-label">Fecha Estado</label>
+                    <input id="fechaest" name="fechaest" class="form-control" type="date" required>
+                    <div class="invalid-tooltip">Debe ingresar una fecha</div>
+                </div>
+    
+                <div class="bg-transparent borde-primary">
+                    <button type="submit" class="btn btn-primary">Registrar</button>
+                    <a href="/clientes" type="button" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>    
+    </main>
+
+    <%- include('partials/_footer'); %>
+
+    <!-- // Script para seleccionar la provincia y la localidad -->
+    <script>
+        document.getElementById('provincia').addEventListener('change', function() {
+            const idProv = this.value;
+            const nombreProv = this.options[this.selectedIndex].text;
+            const localidadSelect = document.getElementById('localidad');
+            document.getElementById('nombreprov').value = nombreProv;
+
+            // Limpiar las opciones de localidad
+            localidadSelect.innerHTML = '<option selected disabled>Elige una Localidad...</option>';
+
+            // Hacer una solicitud AJAX para obtener las localidades
+            fetch(`/localidades/${idProv}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(localidad => {
+                        const option = document.createElement('option');
+                        option.value = localidad.id_Local;
+                        option.textContent = localidad.Localidad;
+                        localidadSelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error al obtener las localidades:', error));
+        });
+
+        document.getElementById('localidad').addEventListener('change', function() {
+            const idLocal = this.value;
+            const nombreLocal = this.options[this.selectedIndex].text;
+            const codpostalSelect = document.getElementById('codpostal');
+            document.getElementById('nombrelocal').value = nombreLocal;
+
+            // Limpiar las opciones de códigos postales
+            codpostalSelect.innerHTML = '<option selected disabled>Elige un Código Postal...</option>';
+
+            // Hacer una solicitud AJAX para obtener las localidades
+            fetch(`/codpostal/${idLocal}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(codigos => {
+                        const option = document.createElement('option');
+                        option.value = codigos.CodPostal;
+                        option.textContent = codigos.CodPostal;
+                        codpostalSelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error al obtener los códigos postales:', error));
+        });
+
+    </script>
+
+</body>
+
+</html>

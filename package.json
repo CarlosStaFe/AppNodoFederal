@@ -1,0 +1,25 @@
+{
+  "name": "appnodofederal",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "app": "node --watch index.js",
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "Carlos Alberto Mayans",
+  "license": "ISC",
+  "description": "Nodo Federal",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}

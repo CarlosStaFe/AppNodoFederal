@@ -1,0 +1,82 @@
+<%- include('partials/_head'); %>
+
+<link href="css/createuser.css" rel="stylesheet">
+<link href="img/ICONO_LF.ico" rel="icon">
+</head>
+
+<body>
+
+<header>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <img class="mb-1 rounded" src="/img/NF-LOGO.jpeg" alt="" width="200" height="75">
+
+<%- include('partials/_header'); %>
+
+<main>
+    <div class="container">
+        <form class="row g-2 col-lg-12 shadow p-2 needs-validation text-primary" novalidate action="/createuser" method="POST">
+            <div class="bg-primary text-white p-1 text-center">
+                <h3>Crear Usuario</h3>
+            </div>
+            <div class="col-lg-5 col-md-12 position-relative">
+                <label for="apelNombre" class="form-label">Apellido y Nombres</label>
+                <input id="apelNombre" name="apelNombre" type="text" class="form-control" required>
+                <div class="invalid-tooltip">Debe ingresar el apellido y nombres</div>
+            </div>
+            <div class="col-lg-3 col-md-12 position-relative">
+                <label for="telefono" class="form-label">Teléfono</label>
+                <input id="telefono" name="telefono" type="tel" class="form-control" required>
+                <div class="invalid-tooltip">Debe ingresar un teléfono de contacto</div>
+            </div>
+            <div class="col-lg-4 col-md-12 position-relative">
+                <label for="email" class="form-label">Email</label>
+                <input id="email" name="email" type="email" class="form-control" required>
+                <div class="invalid-tooltip">Debe ingresar un correo electrónico</div>
+            </div>
+            <div class="col-md-8 position-relative">
+                <label for="nronodo" class="form-label">Nodo del Usuario</label>
+                <select id="nronodo" name="nronodo" class="form-select" required>
+                    <option value="">Seleccione un Nodo</option>
+                    <% filas.forEach((nodo) => { %>
+                        <option value="<%= nodo.NroNodo %> - <%= nodo.Nombre %>"><%= nodo.NroNodo %> - <%= nodo.Nombre %></option>
+                    <% }); %>
+                </select>
+            </div>
+            <div class="col-md-4 position-relative">
+                <label for="rol" class="form-label">Rol de Usuario</label>
+                <select id="rol" name="rol" class="form-select" required>
+                    <option value="">Seleccione un Rol</option>
+                    <option value="Socio">Socio</option>
+                    <option value="Nodo">Nodo</option>
+                    <option value="Admin">Admin</option>
+                </select>
+            </div>
+            <div class="col-md-12 col-lg-5 position-relative">
+                <label for="usuario" class="form-label">Usuario</label>
+                <input id="usuario" name="usuario" type="text" class="form-control text-lowercase" required>
+                <div class="invalid-tooltip">Debe ingresar el nombre del usuario para el sistema</div>
+            </div>
+            <div class="col-md-12 col-lg-5 position-relative">
+                <label for="password" class="form-label">Contraseña</label>
+                <input id="password" name="password" type="password" class="form-control" required>
+                <div class="invalid-tooltip">Debe ingresar la contraseña del usuario</div>
+            </div>
+            <div class="col-lg-1 col-md-6 position-relative">
+                <label for="activo" class="form-check-label">Activo?</label>
+                <input id="activo" name="activo" type="checkbox" class="form-check-input p-4 position-relative">
+            </div>
+
+            <div class="bg-transparent borde-primary">
+                <button type="submit" class="btn btn-primary">Registrar</button>
+                <a href="/usuarios" type="button" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>    
+</main>
+
+<%- include('partials/_footer'); %>
+
+</body>
+
+</html>

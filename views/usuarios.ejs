@@ -1,0 +1,90 @@
+<%- include('partials/_head'); %>
+
+    <link href="/css/tablas.css" rel="stylesheet">
+    <link href="/img/ICONO_LF.ico" rel="icon">
+    <link href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" rel="stylesheet" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+
+<header>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <img class="mb-1 rounded" src="/img/NF-LOGO.jpeg" alt="" width="200" height="75">
+
+<%- include('partials/_header'); %>
+
+<div class="container-fluid">
+    <h2>Mantenimiento de Usuarios</h2>
+    <a href="/createuser" class="btn btn-outline-primary mt-2"><i class='bx bxs-plus-circle bx-md'></i>Crear</a>
+    <!-- <a href="/" class="btn btn-outline-success mt-4"><i class='bx bx-home-circle bx-md'></i>Inicio</a> -->
+    <table id="tablaUsuarios" class="table table-bordered table-hover table-striped mt-2">
+        <thead>
+            <tr class="bg-primary text-white text-center">
+                <th class="cabecera">APELLIDO Y NOMBRES</th>
+                <th class="cabecera">TELÉFONO</th>
+                <th class="cabecera">EMAIL</th>
+                <th class="cabecera">NODO</th>
+                <th class="cabecera">ROL</th>
+                <th class="cabecera">ACTIVO</th>
+                <th class="cabecera">USUARIO</th>
+                <th class="cabecera">OPC.</th>
+            </tr>
+        </thead>
+        <tbody class="detalle-user">
+            <% if (filas) { %>
+                <% filas.forEach((data)=> { %>
+                    <tr>
+                        <td><%= data.ApelNombre %></td>
+                        <td><%= data.Telefono %></td>
+                        <td><%= data.Email %></td>
+                        <td><%= data.NombreNodo %></td>
+                        <td><%= data.Rol %></td>
+                        <% if (data.Activo === 1) { %>
+                            <td class="act"><i class="fa-solid fa-square-check" style="color: green;"></i>
+                            </td>
+                        <% } else { %>
+                            <td class="act"><i class="fa-solid fa-square-check" style="color: red;"></i>
+                            </td>
+                        <% } %>
+                        <td><%= data.Usuario %></td>
+                        <td class="opc">
+                            <a href="/edituser/<%= data.id %>" class="btn btn-info btn-sm"><i class='bx bxs-edit'></i></a>
+                            <a href="/deleteuser/<%= data.id %>" class="btn btn-danger btn-sm"><i class='bx bxs-trash-alt'></i></a>
+                        </td>
+                    </tr>
+                <% }) %>
+            <% } %>
+        </tbody>
+    </table>
+</div>
+
+<%- include('partials/_footer'); %>
+
+<!-- Incluye los archivos JS de DataTables -->
+<script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
+
+<script>
+    let opciones = {
+        "language": {
+            "url": "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
+        },
+        "pageLength": 10,
+        "destroy": true,
+        "columnDefs": [
+            { "orderable": false, "targets": [5, 7] }],
+        //"scrollx": "5000px",
+        "lengthMenu": [ 10, 25, 50, 100]
+    };
+    
+    let table = new DataTable('#tablaUsuarios', opciones);
+    $(document).ready(function() {
+        $('#tablaUsuarios').DataTable();
+    });
+</script>
+
+</body>
+
+</html>

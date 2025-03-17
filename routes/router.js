@@ -1,0 +1,129 @@
+const express = require('express');
+const router = express.Router();
+
+const userController = require('../controllers/userController');
+const nodoController = require('../controllers/nodoController');
+const socioController = require('../controllers/socioController');
+const clienteController = require('../controllers/clienteController');
+const localController = require('../controllers/localController');
+
+//----- ROUTER DE LAS VISTAS -----
+// ROUTER PARA EL LOGIN
+router.get('/', userController.verificado, (req, res) => {
+    res.render('menu', { user: req.user });
+});
+router.get('/login', (req, res) => {
+    res.render('login', { alert: false });
+});
+
+// ROUTER PARA LOS USUARIOS
+router.get('/usuarios', userController.listar, (req, res) => {
+    res.render('usuarios', { filas: req.filas });
+});
+router.get('/createuser', async (req, res) => {
+    try {
+        const nodosPromise = nodoController.listar(req, res);        
+        const [nodosResult] = await Promise.all([nodosPromise]);
+        res.render('createuser', { filas: req.filas});
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Error al cargar la página de creación de usuario');
+    }
+});
+router.get('/edituser/:id', async (req, res) => {
+    try {
+        const userPromise = userController.editarUser(req, res);
+        const nodosPromise = nodoController.listar(req, res);
+        const [userResult, nodosResult] = await Promise.all([userPromise, nodosPromise]);
+        res.render('edituser', { user: req.user, filas: req.filas });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Error al cargar la página de edición de usuario');
+    }
+});
+router.get('/deleteuser/:id', userController.eliminar, (req, res) => {
+    res.redirect('/usuarios');
+});
+
+// ROUTER PARA LOS NODOS
+router.get('/nodos', async (req, res) => {
+    try {
+        const nodosPromise = nodoController.listar(req, res);
+        const [nodosResult] = await Promise.all([nodosPromise]);
+        res.render('nodos', { filas: req.filas });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Error al cargar la página de creación de usuario');
+    }
+});
+router.get('/createnodo', (req, res) => {
+    res.render('createnodo');
+});
+router.get('/editnodo/:id', nodoController.editarNodo, (req, res) => {
+    res.render('editnodo', { data: req.data });
+});
+
+// ROUTER PARA LOS SOCIOS
+router.get('/socios', socioController.listar, (req, res) => {
+    res.render('socios', { filas: req.filas });
+});
+router.get('/createsocio', async (req, res) => {
+    try {
+        const nodosPromise = nodoController.listar(req, res);        
+        const [nodosResult] = await Promise.all([nodosPromise]);
+        res.render('createsocio', { filas: req.filas });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Error al cargar la página de creación de socio');
+    }
+});
+router.get('/editsocio/:id', async (req, res) => {
+    try {
+        const sociosPromise = socioController.editarSocio(req, res);
+        const nodosPromise = nodoController.listar(req, res);
+        const [socioResult, nodosResult] = await Promise.all([sociosPromise, nodosPromise]);
+        res.render('editsocio', { data: req.data, filas: req.filas });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Error al cargar la página de edición de socio');
+    }
+});
+
+// ROUTER PARA LOS CLIENTES
+router.get('/clientes', clienteController.listar, (req, res) => {
+    res.render('clientes', { filas: req.filas });
+});
+router.get('/createcliente', (req, res) => {
+    res.render('createcliente');
+});
+router.get('/editcliente/:id', clienteController.modificar, (req, res) => {
+    res.render('editcliente', { data: req.data });
+});
+
+// ROUTER PARA LOS METODOS DEL CONTROLLER
+router.post('/login', userController.login);
+
+router.post('/createuser', userController.registrar);
+router.post('/edituser/:id', userController.modificar);
+
+router.post('/createnodo', nodoController.registrar);
+router.post('/editnodo/:id', nodoController.modificar);
+
+router.post('/createsocio', socioController.registrar);
+router.post('/editsocio/:id', socioController.modificar);
+
+router.post('/createcliente', clienteController.registrar);
+router.post('/editcliente/:id', clienteController.modificar);
+
+// Ruta para obtener localidades según la provincia
+router.get('/localidades/:idProv', localController.getLocalidades);
+// Ruta para obtener códigos postales según la localidad
+router.get('/codpostal/:idLocal', localController.getCodigos);
+// Ruta para obtener el primer numero de nodo
+router.get('/primerNodo', nodoController.primerNodo);
+// Ruta para obtener el primer numero de socio
+router.get('/primerSocio', socioController.primerSocio);
+
+router.get('/logout', userController.logout);
+
+module.exports = router;

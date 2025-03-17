@@ -1,0 +1,1 @@
+openssl req -nodes -x509 -newkey rsa:4096 -keyout server.key -out server.cer -days 1000 -subj /CN=nodofederal.net.ar

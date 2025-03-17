@@ -1,0 +1,29 @@
+body {
+  height: 100%;
+}
+
+#nombre {
+  text-transform: uppercase;
+}
+
+#provincia {
+  text-transform: uppercase;
+}
+
+#localidad {
+  text-transform: uppercase;
+}
+
+#codpostal {
+  text-transform: uppercase;
+}
+
+#email {
+  text-transform: lowercase;
+}
+
+input[type="checkbox"] {
+  margin-top: auto;
+  width: 25px;
+  height: 25px;
+}
