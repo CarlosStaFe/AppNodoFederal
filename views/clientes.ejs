@@ -3,7 +3,7 @@
     <link href="/css/tablas.css" rel="stylesheet">
     <link href="/img/ICONO_LF.ico" rel="icon">
     <link href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/  U6swU2Im1vVX0SVk9ABhg==" rel="stylesheet" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" rel="stylesheet" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -23,9 +23,11 @@
         <thead>
             <tr class="bg-primary text-white text-center">
                 <th class="cabecera">APELLIDO Y NOMBRES</th>
-                <th class="cabecera">CUIT/L</th>
                 <th class="cabecera">F.NACIM.</th>
                 <th class="cabecera">SEXO</th>
+                <th class="cabecera">T.DOC.</th>
+                <th class="cabecera">DOCUMENTO</th>
+                <th class="cabecera">CUIT/L</th>
                 <th class="cabecera">DOMICILIO</th>
                 <th class="cabecera">CODIGO</th>
                 <th class="cabecera">LOCALIDAD</th>
@@ -34,17 +36,18 @@
                 <th class="cabecera">EMAIL</th>
                 <th class="cabecera">ESTADO</th>
                 <th class="cabecera">F.ESTADO</th>
-                <th class="cabecera">ACTIVO</th>
                 <th class="cabecera">OPC.</th>
             </tr>
         </thead>
-        <tbody class="detalle-socio">
+        <tbody class="detalle-cliente">
             <% if (filas) { %>
                 <% filas.forEach((cliente)=> { %>
                     <tr>
-                        <td><%= cliente.ApelNombre %></td>
-                        <td><%= cliente.FechaNac %></td>
+                        <td class="apelnom"><%= cliente.ApelNombre %></td>
+                        <td><%= new Date(cliente.FechaNac).toLocaleDateString('es-ES') %></td>
                         <td><%= cliente.Sexo %></td>
+                        <td><%= cliente.TipoDoc %></td>
+                        <td><%= cliente.Documento %></td>
                         <td><%= cliente.Cuil %></td>
                         <td><%= cliente.Domicilio %></td>
                         <td><%= cliente.CodPostal %></td>
@@ -53,17 +56,9 @@
                         <td><%= cliente.Telefono %></td>
                         <td><%= cliente.Email %></td>
                         <td><%= cliente.Estado %></td>
-                        <td><%= cliente.FechaEst %></td>
-                        <% if (cliente.Activo === 1) { %>
-                            <td class="act"><i class="fa-solid fa-square-check" style="color: green;"></i>
-                            </td>
-                        <% } else { %>
-                            <td class="act"><i class="fa-solid fa-square-check" style="color: red;"></i>
-                            </td>
-                        <% } %>
+                        <td><%= new Date(cliente.FechaEst).toLocaleDateString('es-ES') %></td>
                         <td class="opc">
                             <a href="/editcliente/<%= cliente.id %>" class="btn btn-info btn-sm"><i class='bx bxs-edit'></i></a>
-                            <!-- <a href="/deleteuser/<%= socio.id %>" class="btn btn-danger btn-sm"><i class='bx bxs-trash-alt'></i></a> -->
                         </td>
                     </tr>
                 <% }) %>
@@ -86,7 +81,7 @@
         "pageLength": 5,
         "destroy": true,
         "columnDefs": [
-            { "orderable": false, "targets": [12, 13] }],
+            { "orderable": false, "targets": [14] }],
         //"scrollx": "5000px",
         "lengthMenu": [ 5, 10, 25, 50, 100]
     };

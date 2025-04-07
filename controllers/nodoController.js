@@ -39,7 +39,7 @@ exports.registrar = async (req, res) => {
     try {
         const nronodo = req.body.nronodo
         const nrofactura = req.body.nrofactura
-        const nombre = req.body.nombre
+        const nombre = req.body.nombre.toUpperCase()
         const domicilio = req.body.domicilio
         const codpostal = req.body.codpostal
         const idLocal = req.body.localidad
@@ -81,7 +81,7 @@ exports.modificar = async (req, res) => {
 
     const nroNodo = req.body.nronodo
     const nroFactura = req.body.nrofactura
-    const nombre = req.body.nombre
+    const nombre = req.body.nombre.toUpperCase()
     const domicilio = req.body.domicilio
     const codpostal = req.body.codpostal
     const idLocal = req.body.localidad

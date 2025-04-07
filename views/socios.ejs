@@ -3,7 +3,7 @@
     <link href="/css/tablas.css" rel="stylesheet">
     <link href="/img/ICONO_LF.ico" rel="icon">
     <link href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/  U6swU2Im1vVX0SVk9ABhg==" rel="stylesheet" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" rel="stylesheet" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -55,11 +55,9 @@
                         <td><%= socio.Telefono %></td>
                         <td><%= socio.Email %></td>
                         <% if (socio.Activo === 1) { %>
-                            <td class="act"><i class="fa-solid fa-square-check" style="color: green;"></i>
-                            </td>
+                            <td class="act"><i class="fa-solid fa-square-check" style="color: green;"></i></td>
                         <% } else { %>
-                            <td class="act"><i class="fa-solid fa-square-check" style="color: red;"></i>
-                            </td>
+                            <td class="act"><i class="fa-solid fa-square-check" style="color: red;"></i></td>
                         <% } %>
                         <td class="opc">
                             <a href="/editsocio/<%= socio.id %>" class="btn btn-info btn-sm"><i class='bx bxs-edit'></i></a>

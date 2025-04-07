@@ -86,7 +86,7 @@ exports.verificado = async (req, res, next) => {
 //PROCEDIMIENTO PARA REGISTRAR USUARIOS
 exports.registrar = async (req, res) => {
     try {
-        const apelNombre = req.body.apelNombre;
+        const apelNombre = req.body.apelNombre.toUpperCase();
         const telefono = req.body.telefono;
         const email = req.body.email;
         const nroNodo = parseInt(req.body.nronodo.substring(0, req.body.nronodo.indexOf('-')));
@@ -145,7 +145,7 @@ exports.editarUser = (req, res) => {
 exports.modificar = async (req, res) => {
     const { id } = req.params;
 
-    const apelNombre = req.body.apelNombre;
+    const apelNombre = req.body.apelNombre.toUpperCase();
     const telefono = req.body.telefono;
     const email = req.body.email;
     const nroNodo = parseInt(req.body.nronodo.substring(0, req.body.nronodo.indexOf('-')));

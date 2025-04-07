@@ -1,0 +1,25 @@
+body {
+  height: 100%;
+}
+
+#apelnombre {
+  text-transform: uppercase;
+}
+
+#provincia {
+  text-transform: uppercase;
+}
+
+#localidad {
+  text-transform: uppercase;
+}
+
+#codpostal {
+  text-transform: uppercase;
+}
+
+#email {
+  text-transform: lowercase;
+}
+
+

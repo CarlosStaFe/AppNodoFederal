@@ -3,6 +3,7 @@
 
     <link href="/css/createcliente.css" rel="stylesheet">
     <link href="/img/ICONO_LF.ico" rel="icon">
+    <script src="/js/get_cuil_cuit.js"></script>
 </head>
 
 <body>
@@ -40,6 +41,7 @@
                         <option selected disabled>Elige sexo...</option>
                         <option value="M">M</option>
                         <option value="F">F</option>
+                        <option value="E">E</option>
                     </select>
                     <div class="invalid-tooltip">Debe ingresar sexo</div>
                 </div>
@@ -62,7 +64,7 @@
                 </div>
                 <div class="col-lg-2 col-md-4 position-relative">
                     <label for="cuil" class="form-label">C.U.I.L.</label>
-                    <input id="cuil" name="cuil" type="text" class="form-control" disabled>
+                    <input id="cuil" name="cuil" type="number" class="form-control" readonly required>
                     <div class="invalid-tooltip">Debe ingresar un C.U.I.L.</div>
                 </div>
                 <div class="col-lg-4 col-md-12 position-relative">
@@ -129,7 +131,7 @@
                     <select id="estado" name="estado" class="form-select" required>
                         <option selected disabled>Elige un estado...</option>
                         <option value="ACTIVO">ACTIVO</option>
-                        <option value="INACTIVO">ACTIVO</option>
+                        <option value="INACTIVO">INACTIVO</option>
                         <option value="ATRASADO">ATRASADO</option>
                         <option value="CANCELADO">CANCELADO</option>
                         <option value="CANCELADO CON ATRASO">CANCELADO CON ATRASO</option>
@@ -201,6 +203,13 @@
                 })
                 .catch(error => console.error('Error al obtener los códigos postales:', error));
         });
+
+        document.getElementById('documento').addEventListener('change', function() {
+            const documento = document.getElementById('documento').value;
+            const sexo = document.getElementById('sexo').value;
+            const cuil_t = getCuilCuit(documento, sexo);
+            document.getElementById('cuil').value = cuil_t;
+        });        
 
     </script>
 

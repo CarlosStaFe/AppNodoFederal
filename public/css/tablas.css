@@ -38,6 +38,11 @@ body {
   font-size: 25px;
 }
 
+.apelnom {
+  text-align: left;
+  font-size: 13px;
+}
+
 .opc {
   text-align: center;
   font-size: 25px;

@@ -11,20 +11,20 @@ exports.listar = async (req, res) => {
     });
 };
 
-// PROCEDIMINETO PARA REGISTAR SOCIOS
+// PROCEDIMINETO PARA REGISTAR CLIENTES
 exports.registrar = async (req, res) => {
     try {
-        const apelNombre = req.body.apelnombre;
+        const apelNombre = req.body.apelnombre.toUpperCase();
         const fechaNac = req.body.fechanac;
         const sexo = req.body.sexo;
-        const tipoDoc = req.body.tipoDoc;
+        const tipoDoc = req.body.tipodoc;
         const documento = req.body.documento;
         const cuil = req.body.cuil;
         const domicilio = req.body.domicilio;
         const codPostal = req.body.codpostal;
         const idLocal = req.body.localidad;
         const localidad = req.body.nombrelocal;
-        const idProv = req.body.Provincia;
+        const idProv = req.body.provincia;
         const provincia = req.body.nombreprov;
         const telefono = req.body.telefono;
         const email = req.body.email;
@@ -45,21 +45,16 @@ exports.registrar = async (req, res) => {
     }
 };
 
-
 // PROCEDIMIENTO PARA MOSTRAR LOS DATOS DEL CLIENTE SELECCIONADO
-exports.editarSocio = (req, res) => {
-    return new Promise((resolve, reject) => {
-        const { id } = req.params;
+exports.editarCliente = (req, res) => {
+    const { id } = req.params;
 
-        conexion.query('SELECT * FROM clientes WHERE id = ?', [id], (error, results) => {
-            if (error) {
-                console.log(error);
-                reject(error);
-            } else {
-                req.data = results[0];
-                resolve(results[0]);
-            }
-        });
+    conexion.query('SELECT * FROM clientes WHERE id = ?', [id], (error, results) => {
+        if (error) {
+            console.log(error);
+        } else {
+            res.render('editcliente', { data: results[0] });
+        };
     });
 };
 
@@ -67,24 +62,24 @@ exports.editarSocio = (req, res) => {
 exports.modificar = async (req, res) => {
     const { id } = req.params;
 
-    const apelNombre = req.body.apelnombre;
+    const apelNombre = req.body.apelnombre.toUpperCase();
     const fechaNac = req.body.fechanac;
     const sexo = req.body.sexo;
-    const tipoDoc = req.body.tipoDoc;
+    const tipoDoc = req.body.tipodoc;
     const documento = req.body.documento;
     const cuil = req.body.cuil;
     const domicilio = req.body.domicilio;
     const codPostal = req.body.codpostal;
     const idLocal = req.body.localidad;
     const localidad = req.body.nombrelocal;
-    const idProv = req.body.Provincia;
+    const idProv = req.body.provincia;
     const provincia = req.body.nombreprov;
     const telefono = req.body.telefono;
     const email = req.body.email;
     const estado = req.body.estado;
     const fechaEst = req.body.fechaest;
 
-    const newCliente = { ApelNombre: apelNombre, Cuil: cuil, FechaNac: fechaNac, Sexo: sexo, TipoDoc: tipoDoc, Documento: documento, Domicilio: domicilio, CodPostal: codPostal, idLocal: idLocal, Localidad: localidad, idProv: idProv, Provincia: provincia, Telefono: telefono, Email: email, Estado: estado, FechaEst: fechaEst, UserRegistro: 'admin'};
+    const newCliente = { ApelNombre: apelNombre, FechaNac: fechaNac, Sexo: sexo, TipoDoc: tipoDoc, Documento: documento, Cuil: cuil , Domicilio: domicilio, CodPostal: codPostal, idLocal: idLocal, Localidad: localidad, idProv: idProv, Provincia: provincia, Telefono: telefono, Email: email, Estado: estado, FechaEst: fechaEst, UserRegistro: 'admin' };
 
     conexion.query('UPDATE clientes SET ? WHERE id = ?', [ newCliente, id ], (error, results) => {
         if (error) {

@@ -23,7 +23,7 @@ function getCuilCuit(document_number, gender) {
         document_number = "0".concat(document_number);
       } else {
         // Muestro un error en caso de no serlo.
-        throw "El numero de document_number ingresado no es correcto.";
+        throw "El numero de documento ingresado no es correcto.";
       }
     }
   
@@ -53,7 +53,7 @@ function getCuilCuit(document_number, gender) {
     let calculo = parseInt(AB.charAt(0)) * 5 + parseInt(AB.charAt(1)) * 4;
   
     /*
-     * Recorro el arreglo y el numero de document_number para
+     * Recorro el arreglo y el numero de documento para
      * realizar las multiplicaciones.
      */
     for (let i = 0; i < 8; i++) {

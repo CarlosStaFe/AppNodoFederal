@@ -3,6 +3,7 @@
 
     <link href="/css/createcliente.css" rel="stylesheet">
     <link href="/img/ICONO_LF.ico" rel="icon">
+    <script src="/js/get_cuil_cuit.js"></script>
 </head>
 
 <body>
@@ -16,7 +17,7 @@
 
     <main>
         <div class="container">
-            <form class="row g-3 col-lg-12 shadow p-3 needs-validation text-primary" novalidate action="/createcliente" method="POST">
+            <form class="row g-3 col-lg-12 shadow p-3 needs-validation text-primary" novalidate action="/editcliente/<%= data.id %>" method="POST">
                 <div class="bg-primary text-white p-1 text-center">
                     <h3>Modificar Cliente</h3>
                 </div>
@@ -26,42 +27,55 @@
                 </div>
                 <div class="col-lg-4 col-md-12 position-relative">
                     <label for="apelnombre" class="form-label">Apellido y Nombres</label>
-                    <input id="apelnombre" name="apelnombre" type="text" class="form-control" required>
+                    <input id="apelnombre" name="apelnombre" type="text" value="<%= data.ApelNombre %>" class="form-control" required>
                     <div class="invalid-tooltip">Debe ingresar el apellido y nombres</div>
                 </div>
                 <div class="col-lg-2 col-md-4 position-relative">
                     <label for="fechanac" class="form-label">Fecha Nac.</label>
-                    <input id="fechanac" name="fechanac" type="date" class="form-control" required>
+                    <input id="fechanac" name="fechanac" type="date" value="<%= new Date(data.FechaNac).toISOString().split('T')[0] %>" class="form-control" required>
                     <div class="invalid-tooltip">Debe ingresar la fecha de nacimiento</div>
                 </div>
                 <div class="col-lg-1 col-md-4 position-relative">
                     <label for="sexo" class="form-label">Sexo</label>
                     <select id="sexo" name="sexo" class="form-select" required>
-                        <option selected disabled>Elige sexo...</option>
+                        <option value="<%= data.Sexo %>"><%= data.Sexo %></option>
                         <option value="M">M</option>
                         <option value="F">F</option>
+                        <option value="E">E</option>
                     </select>
                     <div class="invalid-tooltip">Debe ingresar sexo</div>
                 </div>
+                <div class="col-lg-1 col-md-4 position-relative">
+                    <label for="tipodoc" class="form-label">Tipo Doc.</label>
+                    <select id="tipodoc" name="tipodoc" class="form-select" required>
+                        <option value="<%= data.TipoDoc %>"><%= data.TipoDoc %></option>
+                        <option value="DNI">DNI</option>
+                        <option value="LC">LC</option>
+                        <option value="LE">LE</option>
+                        <option value="CI">CI</option>
+                        <option value="PAS">PAS</option>
+                    </select>
+                    <div class="invalid-tooltip">Debe ingresar un tipo de documento</div>
+                </div>
                 <div class="col-lg-2 col-md-4 position-relative">
                     <label for="documento" class="form-label">Documento</label>
-                    <input id="documento" name="documento" type="text" class="form-control" required>
+                    <input id="documento" name="documento" type="text" value="<%= data.Documento %>" class="form-control" required>
                     <div class="invalid-tooltip">Debe ingresar un documento</div>
                 </div>
                 <div class="col-lg-2 col-md-4 position-relative">
                     <label for="cuil" class="form-label">C.U.I.L.</label>
-                    <input id="cuil" name="cuil" type="text" class="form-control" disabled>
+                    <input id="cuil" name="cuil" type="text" value="<%= data.Cuil %>" class="form-control" disabled>
                     <div class="invalid-tooltip">Debe ingresar un C.U.I.L.</div>
                 </div>
                 <div class="col-lg-4 col-md-12 position-relative">
                     <label for="domicilio" class="form-label">Domicilio</label>
-                    <input id="domicilio" name="domicilio" type="text" class="form-control" required>
+                    <input id="domicilio" name="domicilio" type="text" value="<%= data.Domicilio %>" class="form-control" required>
                     <div class="invalid-tooltip">Debe ingresar un domicilio</div>
                 </div>
                 <div class="col-lg-2 col-md-5 position-relative">
                     <label for="provincia" class="form-label">Provincia</label>
                     <select id="provincia" name="provincia" class="form-select" required>
-                        <option selected disabled>Provincia...</option>
+                        <option value="<%= data.idProv %>"><%= data.Provincia %></option>
                         <option value="6">BUENOS AIRES</option>
                         <option value="2">CABA</option>
                         <option value="10">CATAMARCA</option>
@@ -90,34 +104,34 @@
                 </div>  
                 <div class="col-lg-4 col-md-5 position-relative">
                     <label for="localidad" class="form-label">Localidad</label>
-                    <select id="localidad" name="localidad" type="text" class="form-select" required>
-                        <option selected disabled>Localidad...</option>
+                    <select id="localidad" name="localidad" type="text" value="<%= data.Localidad %>" class="form-select" required>
+                        <option value="<%= data.idLocal %>"><%= data.Localidad %></option>
                     </select>
                     <div class="invalid-tooltip">Debe ingresar una localidad</div>
                 </div>
                 <div class="col-lg-2 col-md-2 position-relative">
                     <label for="codpostal" class="form-label">Código Postal</label>
-                    <select id="codpostal" name="codpostal" type="number" class="form-select" required>
-                        <option selected disabled>Código Postal...</option>
+                    <select id="codpostal" name="codpostal" type="number" class="form-select" value="<%= data.CodPostal %>" required>
+                        <option value="<%= data.CodPostal %>"><%= data.CodPostal %></option>
                     </select>
                     <div class="invalid-tooltip">Debe ingresar un Código Postal</div>
                 </div>
                 <div class="col-lg-3 col-md-6 position-relative">
                     <label for="telefono" class="form-label">Teléfono</label>
-                    <input id="telefono" name="telefono" type="tel" class="form-control" required>
+                    <input id="telefono" name="telefono" type="tel" class="form-control" value="<%= data.Telefono %>" required>
                     <div class="invalid-tooltip">Debe ingresar un teléfono</div>
                 </div>
                 <div class="col-lg-4 col-md-6 position-relative">
                     <label for="email" class="form-label">Email</label>
-                    <input id="email" name="email" type="email" class="form-control" required>
+                    <input id="email" name="email" type="email" class="form-control" value="<%= data.Email %>" required>
                     <div class="invalid-tooltip">Debe ingresar un correo electrónico</div>
                 </div>
                 <div class="col-lg-3 col-md-6 position-relative">
                     <label for="estado" class="form-label">Estado</label>
                     <select id="estado" name="estado" class="form-select" required>
-                        <option selected disabled>Elige un estado...</option>
+                        <option value="<%= data.Estado %>"><%= data.Estado %></option>
                         <option value="ACTIVO">ACTIVO</option>
-                        <option value="INACTIVO">ACTIVO</option>
+                        <option value="INACTIVO">INACTIVO</option>
                         <option value="ATRASADO">ATRASADO</option>
                         <option value="CANCELADO">CANCELADO</option>
                         <option value="CANCELADO CON ATRASO">CANCELADO CON ATRASO</option>
@@ -128,12 +142,12 @@
                 </div>
                 <div class="col-lg-2 col-md-12 position-relative">
                     <label for="fechaest" class="form-label">Fecha Estado</label>
-                    <input id="fechaest" name="fechaest" class="form-control" type="date" required>
+                    <input id="fechaest" name="fechaest" class="form-control" type="date" value="<%= new Date(data.FechaEst).toISOString().split('T')[0] %>" required>
                     <div class="invalid-tooltip">Debe ingresar una fecha</div>
                 </div>
     
                 <div class="bg-transparent borde-primary">
-                    <button type="submit" class="btn btn-primary">Registrar</button>
+                    <button type="submit" class="btn btn-primary">Modificar</button>
                     <a href="/clientes" type="button" class="btn btn-secondary">Cancelar</a>
                 </div>
             </form>
@@ -189,6 +203,13 @@
                 })
                 .catch(error => console.error('Error al obtener los códigos postales:', error));
         });
+
+        document.getElementById('documento').addEventListener('change', function() {
+            const documento = document.getElementById('documento').value;
+            const sexo = document.getElementById('sexo').value;
+            const cuil_t = getCuilCuit(documento, sexo);
+            document.getElementById('cuil').value = cuil_t;
+        });        
 
     </script>
 

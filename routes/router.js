@@ -96,7 +96,7 @@ router.get('/clientes', clienteController.listar, (req, res) => {
 router.get('/createcliente', (req, res) => {
     res.render('createcliente');
 });
-router.get('/editcliente/:id', clienteController.modificar, (req, res) => {
+router.get('/editcliente/:id', clienteController.editarCliente, (req, res) => {
     res.render('editcliente', { data: req.data });
 });
 

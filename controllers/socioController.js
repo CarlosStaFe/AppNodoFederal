@@ -89,7 +89,7 @@ exports.modificar = async (req, res) => {
     const nroNodo = parseInt(req.body.nronodo.substring(0, req.body.nronodo.indexOf('-')));
     const nodo = req.body.nronodo;
     const nroSocio = req.body.nroSocio;
-    const razonSocial = req.body.razonSocial;
+    const razonSocial = req.body.razonsocial;
     const cuit = req.body.cuit;
     const tipo = req.body.tipo;
     const domicilio = req.body.domicilio;
