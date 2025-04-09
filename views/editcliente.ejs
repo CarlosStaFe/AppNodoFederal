@@ -4,6 +4,7 @@
     <link href="/css/createcliente.css" rel="stylesheet">
     <link href="/img/ICONO_LF.ico" rel="icon">
     <script src="/js/get_cuil_cuit.js"></script>
+    <script src="/js/validarcuit.js"></script>
 </head>
 
 <body>
@@ -22,8 +23,9 @@
                     <h3>Modificar Cliente</h3>
                 </div>
                 <div>
-                    <input id="nombrelocal" name="nombrelocal" type="hidden">
-                    <input id="nombreprov" name="nombreprov" type="hidden">
+                    <input id="nombrelocal" name="nombrelocal" type="hidden" value="<%= data.Localidad %>">
+                    <input id="nombreprov" name="nombreprov" type="hidden" value="<%= data.Provincia %>">
+                    <input id="nrocuil" name="nrocuil" type="hidden" value="<%= data.Cuil %>">
                 </div>
                 <div class="col-lg-4 col-md-12 position-relative">
                     <label for="apelnombre" class="form-label">Apellido y Nombres</label>
@@ -41,7 +43,7 @@
                         <option value="<%= data.Sexo %>"><%= data.Sexo %></option>
                         <option value="M">M</option>
                         <option value="F">F</option>
-                        <option value="E">E</option>
+                        <option value="S">S</option>
                     </select>
                     <div class="invalid-tooltip">Debe ingresar sexo</div>
                 </div>
@@ -64,7 +66,7 @@
                 </div>
                 <div class="col-lg-2 col-md-4 position-relative">
                     <label for="cuil" class="form-label">C.U.I.L.</label>
-                    <input id="cuil" name="cuil" type="text" value="<%= data.Cuil %>" class="form-control" disabled>
+                    <input id="cuil" name="cuil" type="text" value="<%= data.Cuil %>" class="form-control" readonly required>
                     <div class="invalid-tooltip">Debe ingresar un C.U.I.L.</div>
                 </div>
                 <div class="col-lg-4 col-md-12 position-relative">
@@ -205,11 +207,18 @@
         });
 
         document.getElementById('documento').addEventListener('change', function() {
-            const documento = document.getElementById('documento').value;
-            const sexo = document.getElementById('sexo').value;
-            const cuil_t = getCuilCuit(documento, sexo);
+            let documento = document.getElementById('documento').value;
+            let sexo = document.getElementById('sexo').value;
+            let cuil_t = getCuilCuit(documento, sexo);
             document.getElementById('cuil').value = cuil_t;
         });        
+
+        document.getElementById('editcliente').addEventListener('submit', function(event) {
+            let documento = document.getElementById('documento').value;
+            let sexo = document.getElementById('sexo').value;
+            let cuil_t = calculateCUIL(documento, sexo);
+            document.getElementById('cuil').value = cuil_t;
+        });
 
     </script>
 

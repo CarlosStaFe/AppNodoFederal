@@ -99,6 +99,9 @@ router.get('/createcliente', (req, res) => {
 router.get('/editcliente/:id', clienteController.editarCliente, (req, res) => {
     res.render('editcliente', { data: req.data });
 });
+router.get('/consultar', (req, res) => {
+    res.render('consultar');
+});
 
 // ROUTER PARA LOS METODOS DEL CONTROLLER
 router.post('/login', userController.login);

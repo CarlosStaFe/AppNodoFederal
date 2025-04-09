@@ -67,7 +67,10 @@ exports.modificar = async (req, res) => {
     const sexo = req.body.sexo;
     const tipoDoc = req.body.tipodoc;
     const documento = req.body.documento;
-    const cuil = req.body.cuil;
+    let cuil = req.body.cuil;
+    if (cuil === null || cuil === undefined || cuil === '') {
+        let cuil = req.body.nrocuil;
+    }
     const domicilio = req.body.domicilio;
     const codPostal = req.body.codpostal;
     const idLocal = req.body.localidad;
