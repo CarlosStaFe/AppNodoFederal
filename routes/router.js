@@ -16,21 +16,22 @@ router.get('/login', (req, res) => {
     res.render('login', { alert: false });
 });
 
+
 // ROUTER PARA LOS USUARIOS
-router.get('/usuarios', userController.listar, (req, res) => {
-    res.render('usuarios', { filas: req.filas });
+router.get('/usuarios', userController.verificado, userController.listar, (req, res) => {
+    res.render('usuarios', { filas: req.filas, user: req.user });
 });
-router.get('/createuser', async (req, res) => {
+router.get('/createuser', userController.verificado, async (req, res) => {
     try {
         const nodosPromise = nodoController.listar(req, res);        
         const [nodosResult] = await Promise.all([nodosPromise]);
-        res.render('createuser', { filas: req.filas});
+        res.render('createuser', { filas: req.filas, user: req.user });
     } catch (error) {
         console.log(error);
         res.status(500).send('Error al cargar la página de creación de usuario');
     }
 });
-router.get('/edituser/:id', async (req, res) => {
+router.get('/edituser/:id', userController.verificado, async (req, res) => {
     try {
         const userPromise = userController.editarUser(req, res);
         const nodosPromise = nodoController.listar(req, res);
@@ -45,63 +46,67 @@ router.get('/deleteuser/:id', userController.eliminar, (req, res) => {
     res.redirect('/usuarios');
 });
 
+
 // ROUTER PARA LOS NODOS
-router.get('/nodos', async (req, res) => {
+router.get('/nodos', userController.verificado, async (req, res) => {
     try {
         const nodosPromise = nodoController.listar(req, res);
         const [nodosResult] = await Promise.all([nodosPromise]);
-        res.render('nodos', { filas: req.filas });
+        res.render('nodos', { filas: req.filas, user: req.user });
     } catch (error) {
         console.log(error);
         res.status(500).send('Error al cargar la página de creación de usuario');
     }
 });
-router.get('/createnodo', (req, res) => {
-    res.render('createnodo');
+router.get('/createnodo', userController.verificado, (req, res) => {
+    res.render('createnodo', { user: req.user });
 });
-router.get('/editnodo/:id', nodoController.editarNodo, (req, res) => {
-    res.render('editnodo', { data: req.data });
+router.get('/editnodo/:id', userController.verificado, nodoController.editarNodo, (req, res) => {
+    res.render('editnodo', { data: req.data, user: req.user });
 });
 
+
 // ROUTER PARA LOS SOCIOS
-router.get('/socios', socioController.listar, (req, res) => {
-    res.render('socios', { filas: req.filas });
+router.get('/socios', userController.verificado, socioController.listar, (req, res) => {
+    res.render('socios', { filas: req.filas, user: req.user });
 });
-router.get('/createsocio', async (req, res) => {
+router.get('/createsocio', userController.verificado, async (req, res) => {
     try {
         const nodosPromise = nodoController.listar(req, res);        
         const [nodosResult] = await Promise.all([nodosPromise]);
-        res.render('createsocio', { filas: req.filas });
+        res.render('createsocio', { filas: req.filas, user: req.user });
     } catch (error) {
         console.log(error);
         res.status(500).send('Error al cargar la página de creación de socio');
     }
 });
-router.get('/editsocio/:id', async (req, res) => {
+router.get('/editsocio/:id', userController.verificado, async (req, res) => {
     try {
         const sociosPromise = socioController.editarSocio(req, res);
         const nodosPromise = nodoController.listar(req, res);
         const [socioResult, nodosResult] = await Promise.all([sociosPromise, nodosPromise]);
-        res.render('editsocio', { data: req.data, filas: req.filas });
+        res.render('editsocio', { data: req.data, filas: req.filas, user: req.user });
     } catch (error) {
         console.log(error);
         res.status(500).send('Error al cargar la página de edición de socio');
     }
 });
 
+
 // ROUTER PARA LOS CLIENTES
-router.get('/clientes', clienteController.listar, (req, res) => {
-    res.render('clientes', { filas: req.filas });
+router.get('/clientes', userController.verificado, clienteController.listar, (req, res) => {
+    res.render('clientes', { filas: req.filas, user: req.user });
 });
-router.get('/createcliente', (req, res) => {
-    res.render('createcliente');
+router.get('/createcliente', userController.verificado, (req, res) => {
+    res.render('createcliente', { user: req.user });
 });
-router.get('/editcliente/:id', clienteController.editarCliente, (req, res) => {
-    res.render('editcliente', { data: req.data });
+router.get('/editcliente/:id', userController.verificado, clienteController.editarCliente, (req, res) => {
+    res.render('editcliente', { data: req.data, user: req.user });
 });
-router.get('/consultar', (req, res) => {
-    res.render('consultar');
+router.get('/consultar', userController.verificado, (req, res) => {
+    res.render('consultar', { user: req.user });
 });
+
 
 // ROUTER PARA LOS METODOS DEL CONTROLLER
 router.post('/login', userController.login);
@@ -117,6 +122,7 @@ router.post('/editsocio/:id', socioController.modificar);
 
 router.post('/createcliente', clienteController.registrar);
 router.post('/editcliente/:id', clienteController.modificar);
+
 
 // Ruta para obtener localidades según la provincia
 router.get('/localidades/:idProv', localController.getLocalidades);

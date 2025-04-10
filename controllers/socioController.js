@@ -7,7 +7,7 @@ exports.listar = (req, res) => {
             console.log(error);
             res.status(500).send('Error al listar los socios');
         } else {
-            res.render('socios', { filas: results });
+            res.render('socios', { filas: results, user: req.user });
         }
     });
 };

@@ -70,7 +70,7 @@ exports.editarNodo = async (req, res) => {
         if (error) {
             console.log(error);
         } else {
-            res.render('editnodo', { data: results[0] });
+            res.render('editnodo', { data: results[0], user: req.user });
         };
     });
 };

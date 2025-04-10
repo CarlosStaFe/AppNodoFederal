@@ -6,48 +6,58 @@
     
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Socios</a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="clientes">Actualizar Clientes</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="consultar">Consultar Antecedentes</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="cargar">Cargar Operación</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="modificar">Modificar Estado</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Nodos</a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/socios">Actualizar Socios</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <!-- <li><a class="dropdown-item" href="#">Facturación</a></li> -->
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Mantenedor</a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/nodos">Actualizar Nodos</a></li>
-                            <li><a class="dropdown-item" href="/usuarios">Actualizar Usuarios</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="/consumos">Consultar Consumos</a></li>
-                            <li><a class="dropdown-item" href="/facturar">Facturación</a></li>
-                        </ul>
-                    </li>  
+                    <% if (user.Rol == 'Socio' || user.Rol == 'Nodo' || user.Rol == 'Admin') { %>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Socios</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="clientes">Actualizar Clientes</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="consultar">Consultar Antecedentes</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="cargar">Cargar Operación</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="modificar">Modificar Estado</a></li>
+                            </ul>
+                        </li>
+                    <% } %>
+                    <% if (user.Rol == 'Nodo' || user.Rol == 'Admin') { %>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Nodos</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/socios">Actualizar Socios</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <!-- <li><a class="dropdown-item" href="#">Facturación</a></li> -->
+                            </ul>
+                        </li>
+                    <% } %>
+                    <% if (user.Rol == 'Admin') { %>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Mantenedor</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/nodos">Actualizar Nodos</a></li>
+                                <li><a class="dropdown-item" href="/usuarios">Actualizar Usuarios</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="/consumos">Consultar Consumos</a></li>
+                                <li><a class="dropdown-item" href="/facturar">Facturación</a></li>
+                            </ul>
+                        </li>
+                    <% } %>
                 </ul>
-
+                <span class="navbar-text ms-auto" class="bx bxs-edit">
+                    <i class="bx bxs-user" style="color: green; font-size: 24px;"></i>
+                    <i style="color: blue;"> <%= user.ApelNombre %></i>
+                </span>
+                        
                 <a type="button" class="btn btn-primary mx-2" href="Logout">Cerrar Sesión</a>
             </div>
         </div>

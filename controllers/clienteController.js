@@ -6,7 +6,7 @@ exports.listar = async (req, res) => {
         if (error) {
             console.log(error);
         }else{
-            res.render('clientes', { filas: results});
+            res.render('clientes', { filas: results, user: req.user });
         };
     });
 };
@@ -53,7 +53,7 @@ exports.editarCliente = (req, res) => {
         if (error) {
             console.log(error);
         } else {
-            res.render('editcliente', { data: results[0] });
+            res.render('editcliente', { data: results[0], user: req.user });
         };
     });
 };

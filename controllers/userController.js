@@ -70,7 +70,9 @@ exports.verificado = async (req, res, next) => {
         try {
             const decodificada = await promisify(jwt.verify)(req.cookies.jwt, process.env.JWT_SECRETO);
             conexion.query('SELECT * FROM usuarios WHERE id = ?', [decodificada.id], (error, results) => {
-                if (!results) { return next() };
+                if (!results || results.length === 0) {
+                     return next();
+                };
                 req.user = results[0];
                 return next();
             });
@@ -86,7 +88,7 @@ exports.verificado = async (req, res, next) => {
 //PROCEDIMIENTO PARA REGISTRAR USUARIOS
 exports.registrar = async (req, res) => {
     try {
-        const apelNombre = req.body.apelNombre.toUpperCase();
+        const apelNombre = req.body.apelNombre;
         const telefono = req.body.telefono;
         const email = req.body.email;
         const nroNodo = parseInt(req.body.nronodo.substring(0, req.body.nronodo.indexOf('-')));
@@ -120,7 +122,7 @@ exports.listar = (req, res) => {
             console.log(error);
             res.status(500).send('Error al listar los usuarios');
         } else {
-            res.render('usuarios', { filas: results });
+            res.render('usuarios', { filas: results, user: req.user });
         }
     });
 };
@@ -145,7 +147,7 @@ exports.editarUser = (req, res) => {
 exports.modificar = async (req, res) => {
     const { id } = req.params;
 
-    const apelNombre = req.body.apelNombre.toUpperCase();
+    const apelNombre = req.body.apelNombre;
     const telefono = req.body.telefono;
     const email = req.body.email;
     const nroNodo = parseInt(req.body.nronodo.substring(0, req.body.nronodo.indexOf('-')));
@@ -159,10 +161,9 @@ exports.modificar = async (req, res) => {
     };
     const usuario = req.body.usuario;
     const password = req.body.password;
-
     var passHash = await bcryptjs.hash(password, 10);
 
-    const newUser = { ApelNombre: apelNombre, Telefono: telefono, Email: email, NroNodo: nroNodo, NombreNodo: nombreNodo, Rol: rol, Activo: activo, Usuario: usuario, Password: passHash, UserRegistro: 'admin  ' };
+    const newUser = { ApelNombre: apelNombre, Telefono: telefono, Email: email, NroNodo: nroNodo, NombreNodo: nombreNodo, Rol: rol, Activo: activo, Usuario: usuario, Password: passHash, UserRegistro: 'admin' };
 
     conexion.query('UPDATE usuarios SET ? WHERE id = ?', [ newUser, id ], (error, results) => {
         if (error) {
