@@ -17,7 +17,7 @@
 
     <main>
         <div class="container">
-            <form class="row g-3 col-lg-12 shadow p-3 needs-validation text-primary" novalidate action="/consultar" method="POST">
+            <form class="row g-3 col-lg-12 shadow p-1 needs-validation text-primary" novalidate action="/consultar" method="POST">
                 <div class="bg-primary text-white p-1 text-center">
                     <h3>Consulta de Antecedentes</h3>
                 </div>
@@ -36,7 +36,7 @@
                 </div> 
                 <div class="bg-transparent borde-primary">
                     <button type="submit" class="btn btn-primary">Buscar</button>
-                    <a href="/Clientes" type="button" class="btn btn-secondary">Cancelar</a>
+                    <a href="/" type="button" class="btn btn-secondary">Cancelar</a>
                 </div>
             </form>
         </div>    
@@ -44,6 +44,42 @@
 
     <%- include('partials/_footer'); %>
 
+    <script>
+        document.getElementById('consultaForm').addEventListener('submit', async function (event) {
+            event.preventDefault(); // Evitar el envío del formulario
+
+            const tipo = document.getElementById('tipo').value;
+            const documento = document.getElementById('documento').value;
+
+            try {
+                const response = await fetch('/api/consulta', { // Cambia '/api/consulta' por la URL de tu API
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ tipo, documento })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error en la consulta: ${response.status}`);
+                }
+
+                const data = await response.json();
+                document.getElementById('resultado').innerHTML = `
+                    <div class="alert alert-success">
+                        <strong>Resultado:</strong> ${JSON.stringify(data)}
+                    </div>
+                `;
+            } catch (error) {
+                document.getElementById('resultado').innerHTML = `
+                    <div class="alert alert-danger">
+                        <strong>Error:</strong> ${error.message}
+                    </div>
+                `;
+            }
+        });
+    </script>
+    
 </body>
 
 </html>

@@ -106,6 +106,9 @@ router.get('/editcliente/:id', userController.verificado, clienteController.edit
 router.get('/consultar', userController.verificado, (req, res) => {
     res.render('consultar', { user: req.user });
 });
+router.get('/operacion', userController.verificado, (req, res) => {
+    res.render('operacion', { user: req.user });
+});
 
 
 // ROUTER PARA LOS METODOS DEL CONTROLLER
