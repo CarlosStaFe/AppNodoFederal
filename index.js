@@ -3,10 +3,14 @@ const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const ejs = require('ejs')
 const app = express();
+const tokenRoutes = require('./routes/token'); // Importar las rutas de token.js
 
 //SETEAMOS EL MOTOR DE PLANTILLAS
 app.set('view engine', 'ejs');
 //app.set('views', './views');
+
+//OBTENEMOS EL TOKEN DE ACCESO
+app.use('/', tokenRoutes); // Usar las rutas de token.js
 
 //SETEAMOS LA CARPETA PUBLICA
 app.use(express.static('public'));

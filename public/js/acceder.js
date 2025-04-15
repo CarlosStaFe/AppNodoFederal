@@ -31,11 +31,12 @@ async function obtenerToken(usuario, contraseña) {
 // Ejemplo de uso
 //obtenerToken('usuarioEjemplo', 'contraseñaEjemplo');
 
-// OBTENER EL ACCESO CON EL REFRESH_TOKEN
+// OBTENER EL ACCESS_TOKEN CON EL REFRESH_TOKEN
 async function tokenConRefresh(refreshToken) {
     const url = process.env.API_URL; // URL desde .env
-    const refreshToken = process.env.REFRESH_TOKEN; // Refresh token desde .env
-
+    //const refreshToken = process.env.REFRESH_TOKEN; // Refresh token desde .env
+    console.log('Refresh token:', refreshToken);
+    
     const datos = new URLSearchParams({
         grant_type: 'refresh_token', // Tipo de grant
         refresh_token: refreshToken  // Refresh token completo
@@ -45,20 +46,18 @@ async function tokenConRefresh(refreshToken) {
         const respuesta = await fetch(url, {
             method: 'POST',
             headers: {
-                //'Content-Type': 'application/json'
-                'Content-Type': 'application/x-www-form-urlencoded' // Header corregido
+                'Content-Type': 'application/json'
             },
-            //body: JSON.stringify(datos)
-            body: datos.toString() // Convertir datos a formato x-www-form-urlencoded
+            body: JSON.stringify(datos)
+            //body: datos.toString() // Convertir datos a formato x-www-form-urlencoded
         });
 
         if (!respuesta.ok) {
             throw new Error(`Error en la solicitud: ${respuesta.status}`);
         }
 
-        const resultado = await respuesta.json();
-        console.log('Nuevo token obtenido:', resultado.token); // Reemplaza "token" con la clave correcta
-        return resultado.token;
+        const { access_token } = await respuesta.json();
+        return access_token; // Devuelve el access_token
     } catch (error) {
         console.error('Error al obtener el token con refresh token:', error);
         return null;
