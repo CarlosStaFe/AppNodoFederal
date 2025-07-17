@@ -1,16 +1,20 @@
 const express = require('express');
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const ejs = require('ejs')
 const app = express();
-const tokenRoutes = require('./routes/token'); // Importar las rutas de token.js
+const tokenRoutes = require('./routes/token');
+const consultarRoutes = require('./routes/token');
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+app.use('/api', consultarRoutes);
+app.use('/', tokenRoutes);
 
 //SETEAMOS EL MOTOR DE PLANTILLAS
 app.set('view engine', 'ejs');
 //app.set('views', './views');
-
-//OBTENEMOS EL TOKEN DE ACCESO
-app.use('/', tokenRoutes); // Usar las rutas de token.js
 
 //SETEAMOS LA CARPETA PUBLICA
 app.use(express.static('public'));
@@ -35,6 +39,8 @@ app.use(cookieParser());
 //LLAMAR AL ROUTER
 app.use('/', require('./routes/router'));
 
+app.use(tokenRoutes); // Asegúrate de usar las rutas de token.js
+
 //PARA ELIMINAR EL CACHE Y QUE NO SE PUEDA VOLVER CON EL BOTON DE BACK LUEGO DEL LOGOUT
 app.use(function (req, res, next) {
     if (!req.user) {
@@ -45,7 +51,5 @@ app.use(function (req, res, next) {
         next();
 });
 
-//SETEAMOS EL PUERTO DEL SERVIDOR
-app.listen(3000, () => {
-    console.log('Servidor conectado en http://localhost:3000');
-});
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Servidor en puerto ${PORT}`));

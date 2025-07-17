@@ -1,9 +1,11 @@
+require('dotenv').config();
+
 // OBTENER EL TOKEN DE ACCESO
-async function obtenerToken(usuario, contraseña) {
+async function obtenerToken() {
     const url = 'https://api/v1/account/authenticate'; // Reemplaza con la URL de tu API
     const datos = {
-        username: usuario,
-        password: contraseña
+        username: process.env.API_USER,
+        password: process.env.API_PASSWORD
     };
 
     try {
@@ -29,7 +31,7 @@ async function obtenerToken(usuario, contraseña) {
 }
 
 // Ejemplo de uso
-//obtenerToken('usuarioEjemplo', 'contraseñaEjemplo');
+obtenerToken();
 
 // OBTENER EL ACCESS_TOKEN CON EL REFRESH_TOKEN
 async function tokenConRefresh(refreshToken) {

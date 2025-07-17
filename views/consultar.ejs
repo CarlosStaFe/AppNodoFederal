@@ -45,7 +45,46 @@
 
     <%- include('partials/_footer'); %>
 
-    <script src="/js/consultar.js"></script>
+    <!-- <script src="/js/consultar.js"></script> -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.querySelector('form');
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault();
+            
+                const tipo = document.getElementById('tipo').value;
+                const documento = document.getElementById('documento').value;
+
+                try {
+                    const response = await fetch('/api/consultar', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ tipo, documento })
+                    });
+                
+                    if (!response.ok) {
+                        throw new Error(`Error en la consulta: ${response.status}`);
+                    }
+                
+                    const data = await response.json();
+                    console.log('Respuesta de la API:', data);
+
+                    document.getElementById('resultado').innerHTML = `
+                        <div class="alert alert-success">
+                            <strong>Resultado:</strong> ${JSON.stringify(data)}
+                        </div>
+                    `;
+                } catch (error) {
+                    document.getElementById('resultado').innerHTML = `
+                        <div class="alert alert-danger">
+                            <strong>Error:</strong> ${error.message}
+                        </div>
+                    `;
+                }
+            });
+        });
+    </script>
 
 </body>
 

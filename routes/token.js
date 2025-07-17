@@ -1,30 +1,54 @@
 const express = require('express');
 const router = express.Router();
-const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
-require('dotenv').config(); // Cargar variables de entorno desde .env
+const fetch = require('node-fetch');
+require('dotenv').config();
 
-// Ruta para obtener el access_token usando el refresh_token
-router.post('/api/token', async (req, res) => {
+router.post('/api/consultar', async (req, res) => {
+    const { tipo, documento } = req.body;
+
     try {
-        const refreshToken = process.env.REFRESH_TOKEN; // Obtener el refresh_token desde .env
-
-        const response = await fetch('https://stgapi.agd-online.com/v1/auth/refresh', {
+        // 1. Obtener el token
+        const tokenResponse = await fetch(process.env.API_TOKEN, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ refresh_token: refreshToken }),
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                username: process.env.API_USER,
+                password: process.env.API_PASSWORD
+            })
         });
 
-        if (!response.ok) {
-            throw new Error(`Error al obtener el token: ${response.status}`);
+        if (!tokenResponse.ok) {
+            return res.status(tokenResponse.status).json({ error: 'Error al obtener el token' });
         }
 
-        const data = await response.json();
-        res.json({ access_token: data.access_token }); // Devolver el nuevo access_token al cliente
+        const { access_token } = await tokenResponse.json();
+
+        // 2. Consultar la API externa con el token
+        let url = '';
+        if (tipo === 'DNI') {
+            url = `https://stgapi.agd-online.com/v1/person/byDni?dni=${documento}`;
+        } else if (tipo === 'CUIL') {
+            url = `https://stgapi.agd-online.com/v1/person/byCuil?cuil=${documento}`;
+        } else {
+            return res.status(400).json({ error: 'Tipo de documento no soportado' });
+        }
+
+        const apiResponse = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${access_token}`,
+            },
+        });
+
+        if (!apiResponse.ok) {
+            return res.status(apiResponse.status).json({ error: 'Error en la consulta a la API externa' });
+        }
+
+        const data = await apiResponse.json();
+        res.json(data);
     } catch (error) {
-        console.error('Error al obtener el token:', error.message);
-        res.status(500).json({ error: 'Error al obtener el token' });
+        res.status(500).json({ error: 'Error interno del servidor', detalle: error.message });
     }
 });
 
