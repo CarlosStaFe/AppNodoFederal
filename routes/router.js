@@ -110,7 +110,6 @@ router.get('/operacion', userController.verificado, (req, res) => {
     res.render('operacion', { user: req.user });
 });
 
-
 // ROUTER PARA LOS METODOS DEL CONTROLLER
 router.post('/login', userController.login);
 
@@ -126,6 +125,13 @@ router.post('/editsocio/:id', socioController.modificar);
 router.post('/createcliente', clienteController.registrar);
 router.post('/editcliente/:id', clienteController.modificar);
 
+// RUTA PARA PASAR LOS DATOS DEL INFORME
+router.post('/informe', (req, res) => {
+    console.log('PASANDO LOS DATOS');
+    console.log('Datos recibidos en /informe:', req.body);
+    const { apellido, nombre, dni, cuil, fecha_nacimiento, localidad, provincia } = req.body;
+    res.render('informe', { apellido, nombre, dni, cuil, fecha_nacimiento, localidad, provincia });
+});
 
 // Ruta para obtener localidades según la provincia
 router.get('/localidades/:idProv', localController.getLocalidades);

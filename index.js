@@ -1,5 +1,4 @@
 const express = require('express');
-const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const ejs = require('ejs')
@@ -14,7 +13,6 @@ app.use('/', tokenRoutes);
 
 //SETEAMOS EL MOTOR DE PLANTILLAS
 app.set('view engine', 'ejs');
-//app.set('views', './views');
 
 //SETEAMOS LA CARPETA PUBLICA
 app.use(express.static('public'));

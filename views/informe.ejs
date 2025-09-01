@@ -1,0 +1,33 @@
+    <%- include('partials/_head'); %>
+
+    <link href="/css/createcliente.css" rel="stylesheet">
+    <link href="/img/ICONO_LF.ico" rel="icon">
+    <script src="/js/get_cuil_cuit.js"></script>
+</head>
+
+<body>
+    <div class="container mt-4">
+        <h2 class="text-dark"><%= apellido %>, <%= nombre %></h2>
+        <div class="row">
+            <div class="col-lg-2 mb-3">
+                <strong>DNI:</strong> <%= dni %>
+            </div>
+            <div class="col-lg-2 mb-3">
+                <strong>CUIL:</strong> <%= cuil %>
+            </div>
+            <div class="col-lg-2 mb-3">
+                <strong>Fecha Nacimiento:</strong> <%= fecha_nacimiento %>
+            </div>
+            <div class="col-lg-3 mb-3">
+                <strong>Localidad:</strong> <%= localidad %>
+            </div>
+            <div class="col-lg-3 mb-3">
+                <strong>Provincia:</strong> <%= provincia %>
+            </div>
+        </div>
+        <a href="/consultar" class="btn btn-primary">Volver</a>
+    </div>
+    <%- include('partials/_footer'); %>
+</body>
+
+</html>

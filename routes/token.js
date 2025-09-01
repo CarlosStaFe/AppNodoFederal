@@ -45,8 +45,8 @@ router.post('/api/consultar', async (req, res) => {
             return res.status(apiResponse.status).json({ error: 'Error en la consulta a la API externa' });
         }
 
-        const data = await apiResponse.json();
-        res.json(data);
+        const datos = await apiResponse.json();
+        res.json(datos);
     } catch (error) {
         res.status(500).json({ error: 'Error interno del servidor', detalle: error.message });
     }
